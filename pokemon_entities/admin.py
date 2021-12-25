@@ -1,7 +1,6 @@
 from django.contrib import admin
 
-from .models import Pokemon, tbl1, PokemonEntity
+from .models import Pokemon, PokemonEntity
 
 admin.site.register(Pokemon)
-admin.site.register(tbl1)
 admin.site.register(PokemonEntity)
