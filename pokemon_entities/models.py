@@ -9,9 +9,12 @@ class Pokemon(models.Model):
     title_jp = models.CharField(max_length=200, blank=True, verbose_name='Название (яп.)')
     image = models.ImageField(null=True, blank=True, verbose_name='Изображение')
     description = models.TextField(blank=True, verbose_name='Описание')
+    previous_evolution = models.ForeignKey(
+        'Pokemon', on_delete=models.SET_NULL, null=True, blank=True,
+        related_name='next_evolution', verbose_name='Родитель')
 
     def __str__(self) -> str:
-        return self.title
+        return f'{self.title}, {self.pk}'
 
     class Meta:
         verbose_name = 'Покемон'
