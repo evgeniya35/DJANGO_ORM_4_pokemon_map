@@ -54,8 +54,7 @@ def show_pokemon(request, pokemon_id):
     pokemon = Pokemon.objects.get(pk=pokemon_id)
     pokemon_entities = pokemon.pokemonentity_set.all()
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
-    img_url = request.build_absolute_uri(
-        pokemon.image.url) if pokemon.image.url else None
+    img_url = request.build_absolute_uri(pokemon.image.url) if pokemon.image else None
     for pokemon_entity in pokemon_entities:
         add_pokemon(
             folium_map, pokemon_entity.lat,
@@ -64,10 +63,12 @@ def show_pokemon(request, pokemon_id):
         )
     try:
         if pokemon.next_evolution.get():
+            if pokemon.next_evolution.get().image:
+               img_url = request.build_absolute_uri(pokemon.next_evolution.get().image.url) 
             next_evolution = {
                 'pokemon_id': pokemon.next_evolution.get().pk,
                 'title_ru': pokemon.next_evolution.get().title,
-                'img_url': request.build_absolute_uri(pokemon.next_evolution.get().image.url),
+                'img_url': img_url
             }
     except Pokemon.DoesNotExist:
         next_evolution = {}
