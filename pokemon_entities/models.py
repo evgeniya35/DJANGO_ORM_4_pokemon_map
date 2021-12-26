@@ -1,8 +1,5 @@
-from django.db import models  # noqa F401
+from django.db import models
 from datetime import datetime
-
-# your models here
-
 
 class Pokemon(models.Model):
     title = models.CharField(max_length=200, verbose_name='Название (рус.)')
@@ -27,7 +24,8 @@ class Pokemon(models.Model):
 
 class PokemonEntity(models.Model):
     pokemon = models.ForeignKey(
-        Pokemon, on_delete=models.SET_NULL, null=True, verbose_name='Покемон')
+        Pokemon, on_delete=models.CASCADE,
+        related_name='pokemon_entities', verbose_name='Покемон')
     apperated_at = models.DateTimeField(
         default=datetime.now, verbose_name='Появляется')
     disapperated_at = models.DateTimeField(
