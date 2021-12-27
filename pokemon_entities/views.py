@@ -52,7 +52,7 @@ def show_pokemon(request, pokemon_id):
         pokemon = Pokemon.objects.get(pk=pokemon_id)
     except Pokemon.DoesNotExist:
         return HttpResponseNotFound(f'<h1>Не найден покемон #{pokemon_id}</h1>')
-    pokemon_entities = pokemon.pokemon_entities.all()
+    pokemon_entities = pokemon.entities.all()
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
     img_url = request.build_absolute_uri(pokemon.image.url) if pokemon.image else None
     for pokemon_entity in pokemon_entities:
